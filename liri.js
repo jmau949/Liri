@@ -85,9 +85,12 @@ let concertThis = () => {
 
 
 let spotifyFunction = () => {
-    if (argument3 === '') {
-        argument3 = 'The+Sign'
-    }
+    // if (argument3 === '') {
+    //     argument3 = 'The+Sign'
+    // }
+    if (!argument3) {
+  argument3 = "The+Sign";
+}
     spotify.search({ type: 'track', query: argument3 }, function (err, data) {
         if (err) {
             return console.log('Error occurred: ' + err);
