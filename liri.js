@@ -5,7 +5,7 @@ var moment = require('moment');
 moment().format();
 var spotify = new Spotify(keys.spotify);
 var axios = require("axios");
-let fs = require('fs')
+let fs = require('fs');
 
 
 let argument2 = process.argv[2]
@@ -27,16 +27,17 @@ let liri = () => {
             doAsItSays()
             break;
     }
-}
+};
 
 function test (){
     for (var property1 in arguments) {
         string1 += `${arguments[property1]},`;
      }
      return string1
-}
+};
 let concertThis = () => {
-    let bandsintown = "https://rest.bandsintown.com/artists/" + argument3 + "/events?app_id=codingbootcamp&upcoming"
+    let bandsintown = "https://rest.bandsintown.com/artists/" + argument3 + "/events?app_id=codingbootcamp&upcoming";
+    let temp = argument3.replace(/\+/g, ' ');
     axios
         .get(bandsintown)
         .then(function (response) {
@@ -44,14 +45,14 @@ let concertThis = () => {
                 console.log(`${argument3} has no upcoming concerts`)
             } else if (response.data.length < 5) {
                 for (var x = 0; x < response.data.length; x++) {
-                    console.log(`${argument3.replace("+", " ")}'s next concert is at ${response.data[x].venue.name} in ${response.data[x].venue.country}, ${response.data[x].venue.city} on ${moment(response.data[x].datetime, 'YYYY-MM-DDTHH:mm').format('YYYY-MM-DD')}`)
+                    console.log(`${temp}'s next concert is at ${response.data[x].venue.name} in ${response.data[x].venue.country}, ${response.data[x].venue.city} on ${moment(response.data[x].datetime, 'YYYY-MM-DDTHH:mm').format('YYYY-MM-DD')}`)
                 }
             } else {
                 for (var x = 0; x < 5; x++) {
-                    console.log(`${argument3.replace("+", " ")}'s next concert is at ${response.data[x].venue.name} in ${response.data[x].venue.country}, ${response.data[x].venue.city} on ${moment(response.data[x].datetime, 'YYYY-MM-DDTHH:mm').format('YYYY-MM-DD')}`)
+                    console.log(`${temp}'s next concert is at ${response.data[x].venue.name} in ${response.data[x].venue.country}, ${response.data[x].venue.city} on ${moment(response.data[x].datetime, 'YYYY-MM-DDTHH:mm').format('YYYY-MM-DD')}`)
                 }
             }
-            fs.appendFile("log.csv", "\n" + test(argument3.replace("+", " "), response.data[0].venue.name,response.data[0].venue.country,response.data[0].venue.city,moment(response.data[0].datetime, 'YYYY-MM-DDTHH:mm').format('YYYY-MM-DD')), function (err) {
+            fs.appendFile("log.csv", "\n" + test(temp), response.data[0].venue.name,response.data[0].venue.country,response.data[0].venue.city,moment(response.data[0].datetime, 'YYYY-MM-DDTHH:mm').format('YYYY-MM-DD')), function (err) {
 
                 // If an error was experienced we will log it.
                 if (err) {
